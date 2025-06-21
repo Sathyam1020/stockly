@@ -58,6 +58,7 @@ export default function PortfolioPage() {
     },
     refetchInterval: autoRefresh ? refreshInterval : false,
   });
+  console.log("Live Prices:", livePrices);
 
   const totalInvestment = portfolio.reduce(
     (sum, stock) => sum + stock.purchasePrice * stock.quantity,

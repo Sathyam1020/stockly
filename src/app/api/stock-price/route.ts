@@ -1,8 +1,7 @@
-// app/api/stock-price/route.ts
+
 import { NextResponse } from "next/server";
 import yahooFinance from "yahoo-finance2";
 
-// GET /api/stock-price?symbol=INFY.NS
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const symbol = searchParams.get("symbol");
@@ -13,6 +12,14 @@ export async function GET(request: Request) {
 
   try {
     const quote = await yahooFinance.quote(symbol);
+
+    if (!quote || !quote.regularMarketPrice) {
+      return NextResponse.json(
+        { error: `No valid data found for symbol: ${symbol}` },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json({
       symbol,
       price: quote.regularMarketPrice,
@@ -23,6 +30,9 @@ export async function GET(request: Request) {
     if (error instanceof Error) {
       errorMessage = error.message;
     }
+
+    console.error(`Error fetching price for ${symbol}:`, errorMessage);
+
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
