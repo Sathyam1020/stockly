@@ -8,7 +8,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { ChevronDown, FilterIcon } from 'lucide-react';
+import { ChevronDown, FilterIcon, SquareActivity } from 'lucide-react';
 import { useState } from 'react';
 
 export type Stock = {
@@ -40,7 +40,13 @@ export default function PortfolioTable({ data, loading }: { data: Stock[], loadi
 
     return (
         <div className="w-full mt-6 rounded-2xl bg-gray-100 dark:bg-[#1f1f1f] border border-gray-200 dark:border-zinc-700 p-6 shadow-sm">
-            {/* Filter Section */}
+            <h2 className="flex items-center gap-2 text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+                <SquareActivity className="w-8 h-8 text-primary" />
+                Holdings
+                <span className="text-lg font-normal text-gray-500 dark:text-gray-400">
+                    ({filteredData.length} stocks)
+                </span>
+            </h2>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
                 <Input
                     placeholder="Search by stock name..."
